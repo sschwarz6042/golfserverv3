@@ -8,3 +8,6 @@ app = flask.Flask(__name__)
 def home():
     year = int(request.args['year'])
     return year
+
+if __name__ == "__main__":
+    app.run()
