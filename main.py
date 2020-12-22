@@ -11,6 +11,7 @@ db = SQLAlchemy(app)
 
 Users = []
 Courses = []
+
 #ScoreCards = [];
 
 class UserModel(db.Model):
@@ -471,7 +472,7 @@ class User(Resource):
         # args = user_put_args.parse_args()
         # Users[uid] = args
         # return Users[uid], 201
-        uid = len(Users);
+        uid = len(Users)
 
         args = user_put_args.parse_args()
         result = UserModel.query.filter_by(id=uid).first()
@@ -528,7 +529,7 @@ class Course(Resource):
 
     @marshal_with(resource_fields_course)
     def put(self):
-        cid = len(Courses);
+        cid = len(Courses)
         args = course_put_args.parse_args()
         result = CourseModel.query.filter_by(id=cid).first()
         if result:
