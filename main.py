@@ -8,9 +8,14 @@ api = Api(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 
+<<<<<<< HEAD
 Users = [];
 Courses = [];
 ScoreCards = [];
+=======
+Users = {};
+Courses = {};
+>>>>>>> parent of 778e2c7... Changed put method
 
 class UserModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -464,7 +469,7 @@ class User(Resource):
         return result
 
     @marshal_with(resource_fields_user)
-    def put(self, uid):
+    def put(self):
         # abort_if_id_exists(uid)
         # args = user_put_args.parse_args()
         # Users[uid] = args
@@ -481,7 +486,7 @@ class User(Resource):
         db.session.add(user)
         db.session.commit()
 
-        Users.append(user);
+        Users[uid] = user;
         return user, 201
 
     @marshal_with(resource_fields_user)
@@ -523,7 +528,7 @@ class Course(Resource):
         return result
 
     @marshal_with(resource_fields_course)
-    def put(self, cid):
+    def put(self):
         cid = len(Courses);
         args = course_put_args.parse_args()
         result = CourseModel.query.filter_by(id=cid).first()
@@ -570,7 +575,8 @@ class Course(Resource):
         db.session.add(course)
         db.session.commit()
 
-        Courses.append(course);
+        Courses[cid] = course;
+
         return course, 201
 
     @marshal_with(resource_fields_course)
