@@ -9,9 +9,14 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Users = [];
 Courses = [];
 ScoreCards = [];
+=======
+Users = {};
+Courses = {};
+>>>>>>> parent of 778e2c7... Changed put method
 =======
 Users = {};
 Courses = {};
