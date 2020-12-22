@@ -483,7 +483,7 @@ class User(Resource):
         db.session.add(user)
         db.session.commit()
 
-        Users[uid] = user;
+        Users.append(user)
         return user, 201
 
     @marshal_with(resource_fields_user)
@@ -501,6 +501,7 @@ class User(Resource):
         if args['password']:
             result.password = args['password']
 
+        Users[uid] = result
         db.session.commit()
         return result
 
@@ -511,6 +512,7 @@ class User(Resource):
         if not result:
             abort(404, message="ID NOT FOUND!")
 
+        Users.remove(result)
         db.session.delete(result)
         db.session.commit()
 
@@ -572,7 +574,7 @@ class Course(Resource):
         db.session.add(course)
         db.session.commit()
 
-        Courses[cid] = course;
+        Courses.append(course);
 
         return course, 201
 
@@ -659,6 +661,7 @@ class Course(Resource):
         if args['h18hc']:
             result.h18hc = args['h18hc']
 
+        Courses[cid] = result
         db.session.commit()
         return result
 
@@ -670,6 +673,7 @@ class Course(Resource):
         db.session.delete(result)
         db.session.commit()
 
+        Courses.remove(result)
         return '', 204
 
 #class ScoreCard(Resource):
