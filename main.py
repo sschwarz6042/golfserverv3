@@ -67,7 +67,7 @@ class CourseModel(db.Model):
 
 class ScoreCardModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    uid = db.Column(db.Integer, foreign_key='UserModel.id')
+    uid = db.Column(db.Integer, nullable=True)
     #Raw/unadjusted score
     h1r = db.Column(db.Integer, nullable=False)
     h2r = db.Column(db.Integer, nullable=False)
