@@ -9,9 +9,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 
 
-Users = [];
-Courses = [];
-ScoreCards = [];
+Users = []
+Courses = []
+#ScoreCards = [];
 
 class UserModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -131,6 +131,7 @@ class CourseModel(db.Model):
 #
 
 db.create_all()
+db.session.commit()
 
 course_put_args = reqparse.RequestParser()
 course_put_args.add_argument("name", type=str, help="Name of the Golf Course", required=True)
