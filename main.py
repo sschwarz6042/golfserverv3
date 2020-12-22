@@ -881,7 +881,7 @@ class ScoreCard(Resource):
 
 api.add_resource(User, "/user/<int:uid>")
 api.add_resource(Course, "/course/<int:cid>")
-api.add_resource(Course, "/scorecard/<int:sid>")
+api.add_resource(ScoreCard, "/scorecard/<int:sid>")
 
 if __name__ == "__main__":
     app.run()
