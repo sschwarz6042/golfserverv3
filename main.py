@@ -467,13 +467,13 @@ class User(Resource):
         return result
 
     @marshal_with(resource_fields_user)
-    def put(self):
+    def put(self, uid):
         # abort_if_id_exists(uid)
         # args = user_put_args.parse_args()
         # Users[uid] = args
         # return Users[uid], 201
-        #uid = len(Users)
-        uid = 0
+        uid = len(Users)
+        #uid = 0
 
         args = user_put_args.parse_args()
         result = UserModel.query.filter_by(id=uid).first()
@@ -529,7 +529,7 @@ class Course(Resource):
         return result
 
     @marshal_with(resource_fields_course)
-    def put(self):
+    def put(self, cid):
         cid = len(Courses)
         args = course_put_args.parse_args()
         result = CourseModel.query.filter_by(id=cid).first()
