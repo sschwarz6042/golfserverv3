@@ -472,7 +472,8 @@ class User(Resource):
         # args = user_put_args.parse_args()
         # Users[uid] = args
         # return Users[uid], 201
-        uid = len(Users)
+        #uid = len(Users)
+        uid = 0
 
         args = user_put_args.parse_args()
         result = UserModel.query.filter_by(id=uid).first()
