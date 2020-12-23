@@ -131,7 +131,7 @@ class CourseModel(db.Model):
 #        return "ScoreCard(user number = {uid}, h1 raw score = {h1r}, h2 raw score = {h2r}, h3 raw score = {h3r}, h4 raw score = {h4r}, h5 raw score = {h5r}, h6 raw score = {h6r}, h7 raw score = {h7r}, h8 raw score = {h8r}, h9 raw score = {h9r}, h10 raw score = {h10r}, h11 raw score = {h11r}, h12 raw score = {h12r}, h13 raw score = {h13r}, h14 raw score = {h14r}, h15 raw score = {h15r}, h16 raw score = {h16r}, h17 raw score = {h17r}, h18 raw score = {h18r}, h1 special strokes = {h1sp}, h2 special strokes = {h2sp}, h3 special strokes = {h3sp}, h4 special strokes = {h4sp}, h5 special strokes = {h5sp}, h6 special strokes = {h6sp}, h7 special strokes = {h7sp}, h8 special strokes = {h8sp}, h9 special strokes = {h9sp}, h10 special strokes = {h10sp}, h11 special strokes = {h11sp}, h12 special strokes = {h12sp}, h13 special strokes = {h13sp}, h14 special strokes = {h14sp}, h15 special strokes = {h15sp}, h16 special strokes = {h16sp}, h17 special strokes = {h17sp}, h18 special strokes = {h18sp}"
 #
 
-#db.create_all()
+db.create_all()
 #db.session.commit()
 
 course_put_args = reqparse.RequestParser()
