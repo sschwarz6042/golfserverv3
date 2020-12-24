@@ -686,7 +686,7 @@ class ScoreCard(Resource):
            abort(404, message="Could Not Find That ScoreCard")
        return result
 
-   @marshal_with(resource_fields_course)
+   @marshal_with(resource_fields_scorecard)
    def put(self, sid):
        #sid = len(ScoreCards);
        args = scorecard_put_args.parse_args()
