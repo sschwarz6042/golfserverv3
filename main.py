@@ -583,7 +583,7 @@ class Course(Resource):
     @marshal_with(resource_fields_course)
     def patch(self, cid):
         args = course_update_args.parse_args()
-        result = UserModel.query.filter_by(id=cid).first()
+        result = CourseModel.query.filter_by(id=cid).first()
         if not result:
             abort(404, message="ID NOT FOUND!")
         if args['name']:
@@ -694,7 +694,8 @@ class ScoreCard(Resource):
        if result:
            abort(409, message="COURSE ID TAKEN!")
 
-       scorecard = CourseModel(id=sid, uid=args['uid'],
+       scorecard = ScoreCardModel(id=sid,
+                            uid=args['uid'],
                             h1r=args['h1r'],
                             h2r=args['h2r'],
                             h3r=args['h3r'],
