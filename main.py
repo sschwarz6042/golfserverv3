@@ -472,7 +472,7 @@ class User(Resource):
         # args = user_put_args.parse_args()
         # Users[uid] = args
         # return Users[uid], 201
-        uid = len(Users)
+        #uid = len(Users)
         #uid = 0
 
         args = user_put_args.parse_args()
@@ -530,7 +530,7 @@ class Course(Resource):
 
     @marshal_with(resource_fields_course)
     def put(self, cid):
-        cid = len(Courses)
+        #cid = len(Courses)
         args = course_put_args.parse_args()
         result = CourseModel.query.filter_by(id=cid).first()
         if result:
@@ -688,7 +688,7 @@ class ScoreCard(Resource):
 
    @marshal_with(resource_fields_course)
    def put(self, sid):
-       sid = len(ScoreCards);
+       #sid = len(ScoreCards);
        args = scorecard_put_args.parse_args()
        result = ScoreCardModel.query.filter_by(id=sid).first()
        if result:
