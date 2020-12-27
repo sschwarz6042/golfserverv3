@@ -20,9 +20,12 @@ class UserModel(db.Model):
     username = db.Column(db.String(100), nullable=False)
     handicap = db.Column(db.Integer, nullable=False)
     password = db.Column(db.String(100), nullable=False)
+    ccid = db.Column(db.Integer, nullable=False)
+    cscid = db.Column(db.Integer, nullable=False)
+    loggedin = db.Column(db.Boolean, nullable=False)
 
     def __repr__(self):
-        return "User(email = {email}, username = {username}, handicap = {handicap}, password = {password})"
+        return "User(email = {email}, username = {username}, handicap = {handicap}, password = {password}, ccid = {ccid}, cscid = {cscid}, loggedin = {loggedin})"
 
 class CourseModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -70,6 +73,7 @@ class CourseModel(db.Model):
 class ScoreCardModel(db.Model):
    id = db.Column(db.Integer, primary_key=True)
    uid = db.Column(db.Integer, nullable=False)
+   cid = db.Column(db.Integer, nullable=False)
    #Raw/unadjusted score
    h1r = db.Column(db.Integer, nullable=False)
    h2r = db.Column(db.Integer, nullable=False)
@@ -128,7 +132,7 @@ class ScoreCardModel(db.Model):
    h17sp = db.Column(db.Integer, nullable=False)
    h18sp = db.Column(db.Integer, nullable=False)
    def __repr__(self):
-       return "ScoreCard(user number = {uid}, h1 raw score = {h1r}, h2 raw score = {h2r}, h3 raw score = {h3r}, h4 raw score = {h4r}, h5 raw score = {h5r}, h6 raw score = {h6r}, h7 raw score = {h7r}, h8 raw score = {h8r}, h9 raw score = {h9r}, h10 raw score = {h10r}, h11 raw score = {h11r}, h12 raw score = {h12r}, h13 raw score = {h13r}, h14 raw score = {h14r}, h15 raw score = {h15r}, h16 raw score = {h16r}, h17 raw score = {h17r}, h18 raw score = {h18r}, h1 special strokes = {h1sp}, h2 special strokes = {h2sp}, h3 special strokes = {h3sp}, h4 special strokes = {h4sp}, h5 special strokes = {h5sp}, h6 special strokes = {h6sp}, h7 special strokes = {h7sp}, h8 special strokes = {h8sp}, h9 special strokes = {h9sp}, h10 special strokes = {h10sp}, h11 special strokes = {h11sp}, h12 special strokes = {h12sp}, h13 special strokes = {h13sp}, h14 special strokes = {h14sp}, h15 special strokes = {h15sp}, h16 special strokes = {h16sp}, h17 special strokes = {h17sp}, h18 special strokes = {h18sp}"
+       return "ScoreCard(user number = {uid}, course number = {cid}, h1 raw score = {h1r}, h2 raw score = {h2r}, h3 raw score = {h3r}, h4 raw score = {h4r}, h5 raw score = {h5r}, h6 raw score = {h6r}, h7 raw score = {h7r}, h8 raw score = {h8r}, h9 raw score = {h9r}, h10 raw score = {h10r}, h11 raw score = {h11r}, h12 raw score = {h12r}, h13 raw score = {h13r}, h14 raw score = {h14r}, h15 raw score = {h15r}, h16 raw score = {h16r}, h17 raw score = {h17r}, h18 raw score = {h18r}, h1 special strokes = {h1sp}, h2 special strokes = {h2sp}, h3 special strokes = {h3sp}, h4 special strokes = {h4sp}, h5 special strokes = {h5sp}, h6 special strokes = {h6sp}, h7 special strokes = {h7sp}, h8 special strokes = {h8sp}, h9 special strokes = {h9sp}, h10 special strokes = {h10sp}, h11 special strokes = {h11sp}, h12 special strokes = {h12sp}, h13 special strokes = {h13sp}, h14 special strokes = {h14sp}, h15 special strokes = {h15sp}, h16 special strokes = {h16sp}, h17 special strokes = {h17sp}, h18 special strokes = {h18sp}"
 
 
 db.create_all()
@@ -258,6 +262,7 @@ resource_fields_course = {
 
 scorecard_put_args = reqparse.RequestParser()
 scorecard_put_args.add_argument("uid", type=int, help="User Number", required=True)
+scorecard_put_args.add_argument("cid", type=int, help="Course Number", required=True)
 scorecard_put_args.add_argument("h1r", type=int, help="Hole 1 Raw Score", required=True)
 scorecard_put_args.add_argument("h2r", type=int, help="Hole 2 Raw Score", required=True)
 scorecard_put_args.add_argument("h3r", type=int, help="Hole 3 Raw Score", required=True)
@@ -315,6 +320,7 @@ scorecard_put_args.add_argument("h18sp", type=int, help="Hole 18 Extra Strokes",
 
 scorecard_patch_args = reqparse.RequestParser()
 scorecard_patch_args.add_argument("uid", type=int, help="User Number")
+scorecard_patch_args.add_argument("cid", type=int, help="User Number")
 scorecard_patch_args.add_argument("h1r", type=int, help="Hole 1 Raw Score")
 scorecard_patch_args.add_argument("h2r", type=int, help="Hole 2 Raw Score")
 scorecard_patch_args.add_argument("h3r", type=int, help="Hole 3 Raw Score")
@@ -374,6 +380,7 @@ scorecard_patch_args.add_argument("h18sp", type=int, help="Hole 18 Extra Strokes
 resource_fields_scorecard = {
    'id': fields.Integer,
    'uid': fields.Integer,
+   'cid': fields.Integer,
    'h1r': fields.Integer,
    'h2r': fields.Integer,
    'h3r': fields.Integer,
@@ -435,19 +442,28 @@ user_put_args.add_argument("email", type=str, help="Email", required=True)
 user_put_args.add_argument("username", type=str, help="Username", required=True)
 user_put_args.add_argument("handicap", type=int, help="Handicap", required=True)
 user_put_args.add_argument("password", type=str, help="Password", required=True)
+user_put_args.add_argument("ccid", type=int, help="Current Course ID", required=True)
+user_put_args.add_argument("cscid", type=int, help="Current Score Card ID", required=True)
+user_put_args.add_argument("loggedin", type=bool, help="Logged In", required=True)
 
 user_update_args = reqparse.RequestParser()
 user_update_args.add_argument("email", type=str, help="Email")
 user_update_args.add_argument("username", type=str, help="Username")
 user_update_args.add_argument("handicap", type=int, help="Handicap")
 user_update_args.add_argument("password", type=str, help="Password")
+user_put_args.add_argument("ccid", type=int, help="Current Course ID")
+user_put_args.add_argument("cscid", type=int, help="Current Score Card ID")
+user_put_args.add_argument("loggedin", type=bool, help="Logged In")
 
 resource_fields_user = {
     'id': fields.Integer,
     'email': fields.String,
     'username': fields.String,
     'handicap': fields.Integer,
-    'password': fields.String
+    'password': fields.String,
+    'ccid': fields.Integer,
+    'cscid': fields.Integer,
+    'loggedin': fields.Boolean
 }
 
 
@@ -481,7 +497,7 @@ class User(Resource):
             abort(409, message="ID TAKEN!")
 
         user = UserModel(id=uid, email=args['email'], username=args['username'], handicap=args['handicap'],
-                         password=args['password'])
+                         password=args['password'], ccid=args['ccid'], cscid=args['cscid'], loggedin=args['loggedin'])
         db.session.add(user)
         db.session.commit()
 
@@ -502,6 +518,12 @@ class User(Resource):
             result.handicap = args['handicap']
         if args['password']:
             result.password = args['password']
+        if args['ccid']:
+            result.ccid = args['ccid']
+        if args['cscid']:
+            result.cscid = args['cscid']
+        if args['loggedin']:
+            result.loggedin = args['loggedin']
 
         Users[uid] = result
         db.session.commit()
@@ -696,6 +718,7 @@ class ScoreCard(Resource):
 
        scorecard = ScoreCardModel(id=sid,
                             uid=args['uid'],
+                            cid=args['cid'],
                             h1r=args['h1r'],
                             h2r=args['h2r'],
                             h3r=args['h3r'],
@@ -765,6 +788,8 @@ class ScoreCard(Resource):
            abort(404, message="ID NOT FOUND!")
        if args['uid']:
            result.uid = args['uid']
+       if args['cid']:
+           result.cid = args['cid']
        if args['h1r']:
            result.h1r = args['h1r']
        if args['h2r']:
