@@ -22,7 +22,7 @@ class UserModel(db.Model):
     password = db.Column(db.String(100), nullable=False)
     ccid = db.Column(db.Integer, nullable=False)
     cscid = db.Column(db.Integer, nullable=False)
-    loggedin = db.Column(db.String(3), nullable=False)
+    loggedin = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
         return "User(email = {email}, username = {username}, handicap = {handicap}, password = {password}, ccid = {ccid}, cscid = {cscid}, loggedin = {loggedin})"
