@@ -22,7 +22,7 @@ class UserModel(db.Model):
     password = db.Column(db.String(100), nullable=False)
     ccid = db.Column(db.Integer, nullable=False)
     cscid = db.Column(db.Integer, nullable=False)
-    loggedin = db.Column(db.Boolean, nullable=False)
+    loggedin = db.Column(db.String(3), nullable=False)
 
     def __repr__(self):
         return "User(email = {email}, username = {username}, handicap = {handicap}, password = {password}, ccid = {ccid}, cscid = {cscid}, loggedin = {loggedin})"
@@ -444,7 +444,7 @@ user_put_args.add_argument("handicap", type=int, help="Handicap", required=True)
 user_put_args.add_argument("password", type=str, help="Password", required=True)
 user_put_args.add_argument("ccid", type=int, help="Current Course ID", required=True)
 user_put_args.add_argument("cscid", type=int, help="Current Score Card ID", required=True)
-user_put_args.add_argument("loggedin", type=bool, help="Logged In", required=True)
+user_put_args.add_argument("loggedin", type=str, help="Logged In", required=True)
 
 user_update_args = reqparse.RequestParser()
 user_update_args.add_argument("email", type=str, help="Email")
@@ -453,7 +453,7 @@ user_update_args.add_argument("handicap", type=int, help="Handicap")
 user_update_args.add_argument("password", type=str, help="Password")
 user_put_args.add_argument("ccid", type=int, help="Current Course ID")
 user_put_args.add_argument("cscid", type=int, help="Current Score Card ID")
-user_put_args.add_argument("loggedin", type=bool, help="Logged In")
+user_put_args.add_argument("loggedin", type=str, help="Logged In")
 
 resource_fields_user = {
     'id': fields.Integer,
@@ -463,7 +463,7 @@ resource_fields_user = {
     'password': fields.String,
     'ccid': fields.Integer,
     'cscid': fields.Integer,
-    'loggedin': fields.Boolean
+    'loggedin': fields.String
 }
 
 
