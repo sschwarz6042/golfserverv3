@@ -451,9 +451,9 @@ user_update_args.add_argument("email", type=str, help="Email")
 user_update_args.add_argument("username", type=str, help="Username")
 user_update_args.add_argument("handicap", type=int, help="Handicap")
 user_update_args.add_argument("password", type=str, help="Password")
-user_put_args.add_argument("ccid", type=int, help="Current Course ID")
-user_put_args.add_argument("cscid", type=int, help="Current Score Card ID")
-user_put_args.add_argument("loggedin", type=str, help="Logged In")
+user_update_args.add_argument("ccid", type=int, help="Current Course ID")
+user_update_args.add_argument("cscid", type=int, help="Current Score Card ID")
+user_update_args.add_argument("loggedin", type=str, help="Logged In")
 
 resource_fields_user = {
     'id': fields.Integer,
