@@ -525,7 +525,7 @@ class User(Resource):
         if args['loggedin']:
             result.loggedin = args['loggedin']
 
-        Users[uid] = result
+        #Users[uid] = result
         db.session.commit()
         return result
 
@@ -685,7 +685,7 @@ class Course(Resource):
         if args['h18hc']:
             result.h18hc = args['h18hc']
 
-        Courses[cid] = result
+        #Courses[cid] = result
         db.session.commit()
         return result
 
